@@ -49,11 +49,10 @@ body {
   grid-row: 2 / 12;
   display: grid;
   grid-template-rows: repeat(10, 1fr);
-
 }
 
 .grid-label-cell {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -71,4 +70,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* hit */
+.hit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem
 }

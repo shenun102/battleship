@@ -1,6 +1,6 @@
 import "./style.css";
 
-import { createPlayerGrid } from "./modules/dom";
+import { createPlayerGrid, renderShot } from "./modules/dom";
 import { ComputerPlayer, Player } from "./modules/player";
 import { Gameboard } from "./modules/gameboard";
 import { Ship } from "./modules/ship";
@@ -63,6 +63,10 @@ gridContainer.forEach((container) => {
       .map((item) => parseInt(item, 10));
     console.log(targetCoord);
     playerOne.attack(playerTwo.gameboard, targetCoord);
+
+    renderShot(2, e.target, playerTwo);
+
+    // Logs for debugging
     console.log(
       `Array of missed shots coordinates`,
       playerTwo.gameboard.missedShots

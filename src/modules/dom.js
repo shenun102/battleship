@@ -78,6 +78,35 @@ export function createPlayerGrid(player, playerId) {
   mainContainer.append(gridContainer);
 }
 
+export function renderShot(playerId, targetShot, player) {
+  const gridContainer = document.querySelector(`.player-${playerId}-grid-js`);
+  
+  // Handle missed shots by graying out the cells
+  player.gameboard.missedShots.forEach((missCoord) => {
+    const targetCell = gridContainer.querySelector(
+      `[data-coordinates="${missCoord.join("")}"]`
+    );
+    if (targetCell) {
+      targetCell.style.backgroundColor = "grey";
+    }
+  });
+
+  // Handle hit shots
+  const targetCoord = targetShot.dataset.coordinates
+    .split("")
+    .map((num) => parseInt(num));
+
+  player.gameboard.ships.forEach((ship) => {
+    ship.coordinates.forEach((shipCoord) => {
+      if (shipCoord[0] === targetCoord[0] && shipCoord[1] === targetCoord[1]) {
+        targetShot.textContent = "X";
+        targetShot.classList.add("hit");
+      }
+    });
+  });
+}
+
+
 // Helper function to create elements
 function createElement(tag = "div", classNames = [""], content = "") {
   const newElement = document.createElement(tag);
