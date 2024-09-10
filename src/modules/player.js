@@ -1,4 +1,4 @@
-import Gameboard from "./gameboard";
+import { Gameboard } from "./gameboard";
 
 export class Player {
   constructor(isComputer = false) {
@@ -53,4 +53,4 @@ export class ComputerPlayer extends Player {
   }
 }
 
-module.exports = { Player, ComputerPlayer };
+// module.exports = { Player, ComputerPlayer };
