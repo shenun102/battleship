@@ -1,6 +1,6 @@
 import { Ship } from "./ship";
 
-class Gameboard {
+export class Gameboard {
   constructor() {
     this.board = []; // Storing ships and their positions
     this.missedShots = []; // To store coordinates of missed attacks
@@ -37,5 +37,4 @@ class Gameboard {
   }
 }
 
-
-module.exports = Gameboard
+module.exports = Gameboard;
