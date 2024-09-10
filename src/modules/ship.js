@@ -5,7 +5,10 @@ export class Ship {
   }
 
   hit() {
-    if (this.numOfHits > this.length) return;
+    if (this.numOfHits === this.length) {
+      console.log("Ship has already been destroyed!");
+      return;
+    }
     this.numOfHits++;
   }
 

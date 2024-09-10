@@ -48,16 +48,28 @@ console.log(playerOne, playerTwo);
 // You’ll need methods to render each player’s Gameboard, so put them in an appropriate module.
 
 createPlayerGrid(playerOne, 1);
-// createPlayerGrid(playerTwo, 2);
+createPlayerGrid(playerTwo, 2);
 
 // Your event listeners should step through the game turn by turn using only methods from other objects. If at any point you are tempted to write a new function, step back and figure out which class or module that function should belong to.
 
-
 // For attacks, let the user click on a coordinate in the enemy Gameboard. Send the user input to methods on your objects, and re-render the boards to display the new information.
 
-const gridContainer = document.querySelector(".grid-cells-container-js");
-gridContainer.addEventListener("click", function (e) {
-  console.log(e.target);
+const gridContainer = document.querySelectorAll(".grid-cells-container-js");
+gridContainer.forEach((container) => {
+  container.addEventListener("click", function (e) {
+    if (!e.target.classList.contains("grid-cell")) return;
+    const targetCoord = e.target.dataset.coordinates
+      .split("")
+      .map((item) => parseInt(item, 10));
+    console.log(targetCoord);
+    playerOne.attack(playerTwo.gameboard, targetCoord);
+    console.log(
+      `Array of missed shots coordinates`,
+      playerTwo.gameboard.missedShots
+    );
+    console.log(`object of ships,`, playerTwo.gameboard.ships);
+    console.log(`Is ship sunk?`, playerTwo.gameboard.ships[0].ship.isSunk());
+  });
 });
 
 // Players should take turns playing the game by attacking the enemy Gameboard. If you feel the need to keep track of the current player’s turn, it’s appropriate to manage that in this module, instead of another mentioned object.

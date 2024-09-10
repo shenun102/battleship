@@ -53,7 +53,7 @@ export function createPlayerGrid(player, playerId) {
   for (let i = 0; i < 100; i++) {
     const cellElement = createElement("div", [
       "grid-cell",
-      "player-grid-cell-js",
+      `player-${playerId}-grid-cell-js`,
     ]);
     const row = String(Math.floor(i / 10));
     const col = String(i % 10);
