@@ -36,13 +36,13 @@ export class ComputerPlayer extends Player {
     } while (this.hasAlreadyAttacked(opponentGameboard, coordinate));
 
     super.attack(opponentGameboard, coordinate);
+    return coordinate;
   }
 
-  // Check if a coordinate has already been attacked, hit or missed.
+  // Check if a coordinate has already been attacked, hit or missed
   hasAlreadyAttacked(opponentGameboard, coordinate) {
-    // store all coordinates, both hits and misses
     const attackedCoords = opponentGameboard.missedShots.concat(
-      opponentGameboard.ships.flatMap((ship) => ship.coordinates)
+      opponentGameboard.hitShots // Combines the array of missedShots and hitShots
     );
 
     // Checked if a coordinate has been attacked

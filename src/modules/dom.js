@@ -33,7 +33,6 @@ export function createPlayerGrid(player, playerId) {
   ]);
 
   // Create labels content
-  const columnLabel = "ABCDEFGHIJK".split("");
   const label = "0 1 2 3 4 5 6 7 8 9".split(" ");
 
   for (let i = 0; i < 10; i++) {
@@ -70,7 +69,7 @@ export function createPlayerGrid(player, playerId) {
       const shipCell = gridCellsContainer.querySelector(
         `[data-coordinates="${coordinate}"]`
       );
-      shipCell.style.backgroundColor = "red";
+      if (playerId == 1) shipCell.style.backgroundColor = "red";
     });
   });
 
@@ -78,9 +77,11 @@ export function createPlayerGrid(player, playerId) {
   mainContainer.append(gridContainer);
 }
 
+// Function to rendershots, misses and hits
+
 export function renderShot(playerId, targetShot, player) {
   const gridContainer = document.querySelector(`.player-${playerId}-grid-js`);
-  
+
   // Handle missed shots by graying out the cells
   player.gameboard.missedShots.forEach((missCoord) => {
     const targetCell = gridContainer.querySelector(
@@ -100,14 +101,15 @@ export function renderShot(playerId, targetShot, player) {
     ship.coordinates.forEach((shipCoord) => {
       if (shipCoord[0] === targetCoord[0] && shipCoord[1] === targetCoord[1]) {
         targetShot.textContent = "X";
+        targetShot.style.backgroundColor = "red";
         targetShot.classList.add("hit");
       }
     });
   });
 }
 
-
 // Helper function to create elements
+
 function createElement(tag = "div", classNames = [""], content = "") {
   const newElement = document.createElement(tag);
   classNames.forEach((className) => newElement.classList.add(className));

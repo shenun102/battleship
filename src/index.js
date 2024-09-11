@@ -8,8 +8,8 @@ import { Ship } from "./modules/ship";
 // Create players
 
 const playerOne = new Player();
-const playerTwo = new Player();
-const computer = new ComputerPlayer();
+// const playerTwo = new Player();
+const playerTwo = new ComputerPlayer();
 
 // populate each player’s Gameboard with predetermined coordinates.
 
@@ -67,10 +67,10 @@ function handleClick(e) {
     .map((item) => parseInt(item, 10));
 
   if (player === 1) {
-    const isGameOver = playerOne.gameboard.areAllShipsSunk();
-    console.log(`All ships Sunk!`, isGameOver);
+    // Check if Player 1 has sunk all ships
+    const isGameOver = playerTwo.gameboard.areAllShipsSunk();
     if (isGameOver) {
-      console.log("Game is over!");
+      console.log("Player 1 wins! Game is over!");
       return;
     }
 
@@ -78,27 +78,35 @@ function handleClick(e) {
     playerOne.attack(playerTwo.gameboard, targetCoord);
     renderShot(2, e.target, playerTwo);
 
-    // Change to Player 2's turn
+    // Change to Player 2's turn (computer)
     player = 2;
     toggleActiveGrid();
 
-    errorHandlingLogs(playerTwo);
-  } else if (player === 2) {
-    const isGameOver = playerTwo.gameboard.areAllShipsSunk();
-    console.log(`All ships Sunk!`, isGameOver);
-    if (isGameOver) {
-      console.log("Game is over!");
-      return;
-    }
-    // Player 2 attacks Player 1's grid
-    playerTwo.attack(playerOne.gameboard, targetCoord);
-    renderShot(1, e.target, playerOne);
+    // Computer player automatically attacks Player 1
+    setTimeout(() => {
+      const isGameOver = playerOne.gameboard.areAllShipsSunk();
+      if (isGameOver) {
+        console.log("Computer wins! Game is over!");
+        return;
+      }
 
-    // Change to Player 1's turn
-    player = 1;
-    toggleActiveGrid();
+      // Computer attacks
 
-    errorHandlingLogs(playerOne);
+      const randomCoord = playerTwo.attack(playerOne.gameboard);
+      console.log("I attacked this coordinate", randomCoord);
+
+      const player1Grid = gridContainer1.querySelector(
+        `[data-coordinates="${randomCoord.join("")}"]`
+      );
+      renderShot(1, player1Grid, playerOne);
+
+      // Change to Player 1's turn
+      player = 1;
+      toggleActiveGrid();
+
+      // Log for debugging
+      // errorHandlingLogs(playerOne);
+    }, 500); // Delay to simulate the computer thinking
   }
 }
 
@@ -115,10 +123,11 @@ function toggleActiveGrid() {
   }
 }
 
-// Initialize by setting the correct grid as clickable
+// Initialize by setting the correct grid as clickable when game start button is clicked
 toggleActiveGrid();
 
 function errorHandlingLogs(player) {
+  console.log("--", player);
   console.log(
     `Array of missed shots coordinates`,
     player.gameboard.missedShots
@@ -127,7 +136,7 @@ function errorHandlingLogs(player) {
   console.log(`Is ship sunk?`, player.gameboard.ships[0].ship.isSunk());
   console.log(`Are all ships sunk?`, player.gameboard.areAllShipsSunk());
 }
-// Players should take turns playing the game by attacking the enemy Gameboard. If you feel the need to keep track of the current player’s turn, it’s appropriate to manage that in this module, instead of another mentioned object.
+
 // The game is played against the computer, so make the ‘computer’ players capable of making random plays. The computer does not have to be smart, but it should know whether or not a given move is legal (i.e. it shouldn’t shoot the same coordinate twice).
 // Create conditions so that the game ends once one player’s ships have all been sunk. This function is also appropriate for this module.
 // Finish it up by implementing a system that allows players to place their ships. For example, you can let them type coordinates for each ship or have a button to cycle through random placements.
