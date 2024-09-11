@@ -7,9 +7,7 @@ import { Ship } from "./modules/ship";
 import { placeShips, autoPlaceShips } from "./modules/place-ships";
 
 // Create players
-
 const playerOne = new Player();
-// const playerTwo = new Player();
 const playerTwo = new ComputerPlayer();
 
 // Start game btn
@@ -72,7 +70,7 @@ placeShipContainer.addEventListener("click", function (e) {
       .split("")
       .map((num) => parseInt(num, 10));
 
-    // Prevent selecting the sasme cell multiple times
+    // Prevent selecting the same cell multiple times
     if (
       currentShipCoords.some(
         (coord) => coord[0] === shipCoords[0] && coord[1] === shipCoords[1]
@@ -82,20 +80,24 @@ placeShipContainer.addEventListener("click", function (e) {
       return;
     }
 
+    // Check if the ship placement is valid (overlaps or alignment)
+    if (!isValidShipPlacement(currentShipCoords, shipCoords, shipLength)) {
+      console.log(
+        "Invalid placement: Overlaps existing ships or incorrect alignment!"
+      );
+      return;
+    }
+
     // Add coordinates to ship placement
     clickCounter++;
-    // console.log(shipCoords);
     currentShipCoords.push(shipCoords);
     e.target.style.backgroundColor = "blue"; // Visual cue
-
-    // console.log("Selected coordinate:", shipCoords);
-    // console.log("Current ship coordinates:", currentShipCoords);
 
     // Check if enough cells have been selected
     if (clickCounter >= shipLength) {
       console.log("Finished placing the ship!");
 
-      // Place ships
+      // Place ship using the placeShips function
       placeShips(playerOne, shipLength, currentShipCoords);
       shipsPlaced++;
       console.log(`Ships placed: ${shipsPlaced}/${numOfShips}`);
@@ -117,16 +119,54 @@ placeShipContainer.addEventListener("click", function (e) {
       shipLengthInput.value = "";
     }
   }
+
   player1GridContainer.addEventListener("click", gridClickHandler);
 });
 
+// Function to check if the ship placement is valid
+function isValidShipPlacement(currentCoords, newCoord, shipLength) {
+  const [newRow, newCol] = newCoord;
+
+  // Check if the ship overlaps with existing ships on the player's gameboard
+  const existingShips = playerOne.gameboard.ships;
+  for (let { coordinates: shipCoordinates } of existingShips) {
+    if (
+      shipCoordinates.some(([row, col]) => row === newRow && col === newCol)
+    ) {
+      return false; // Overlap found
+    }
+  }
+
+  // Ensure ship placement fits the selected length and alignment
+  if (currentCoords.length > 0) {
+    // Calculate if the ship is aligned horizontally or vertically
+    const [prevRow, prevCol] = currentCoords[currentCoords.length - 1];
+
+    // Horizontal alignment: same row, consecutive columns
+    if (prevRow === newRow && Math.abs(prevCol - newCol) === 1) {
+      return true;
+    }
+
+    // Vertical alignment: same column, consecutive rows
+    if (prevCol === newCol && Math.abs(prevRow - newRow) === 1) {
+      return true;
+    }
+
+    return false; // Invalid alignment (non-contiguous or diagonal)
+  }
+
+  // For the first coordinate, it's always valid
+  return true;
+}
+
+// Other game logic remains the same...
 
 console.log(playerOne, playerTwo);
 
 createPlayerGrid(playerOne, 1);
 createPlayerGrid(playerTwo, 2);
 
-// Start game btn
+// Game start logic
 document.querySelector(".start-btn-js").addEventListener("click", function (e) {
   e.target.style.display = "none"; // Hide start button
 
