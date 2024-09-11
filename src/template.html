@@ -7,7 +7,35 @@
   </head>
   <body>
     <header id="header">Battleships</header>
-    <main id="main-container"></main>
+    <main id="main-container">
+      <div class="content-top">
+        <button class="start-game start-btn-js">Start</button>
+        <div class="input-container">
+          <input
+            type="number"
+            id="ship-amount"
+            name="ship_number"
+            placeholder="Number of Ships"
+          />
+
+          <input
+            type="number"
+            id="ship-length"
+            name="ship_length"
+            placeholder="Ship Length"
+            style="display: none"
+          />
+        </div>
+        <div class="place-ship-container place-ship-container-js">
+          <button class="submit-btn submit-btn-js">Submit</button>
+          <button style="display: none" class="length-btn length-btn-js">
+            Submit
+          </button>
+          <button class="finish-place-btn finish-place-btn-js">Finish</button>
+        </div>
+      </div>
+      <div class="content-bot"></div>
+    </main>
     <footer id="footer">Made by shenun102</footer>
   </body>
 </html>

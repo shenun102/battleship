@@ -17,8 +17,37 @@ body {
   width: 100vw;
   background-color: azure;
   display: flex;
+  flex-direction: column;
+}
+
+.content-top {
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+}
+
+.content-top > button {
+  width: 15rem;
+  height: 2rem;
+  border-radius: 1rem;
+  border: 1px solid black;
+  outline: none;
+  transition: 0.2s ease-in;
+}
+
+.content-top > button:hover {
+  background-color: rgb(174, 173, 173);
+  transform: scale(1.1)
+}
+
+
+.content-bot {
+  height: 70vh;
+  display: flex;
+  justify-content: center;
   gap: 2rem;
 }
 
@@ -26,13 +55,14 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+  padding-top: 3rem;
   align-items: center;
 }
 
 .grid-cells-container {
-  height: 600px;
-  width: 600px;
+  height: 500px;
+  width: 500px;
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
@@ -77,5 +107,5 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.5rem
+  font-size: 2.5rem;
 }

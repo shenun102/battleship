@@ -1,5 +1,7 @@
 export function createPlayerGrid(player, playerId) {
   const mainContainer = document.querySelector("#main-container");
+  const contentTop = document.querySelector(".content-top");
+  const contentBot = document.querySelector(".content-bot");
   // Create grid
   const gridContainer = createElement("div", [
     "grid-container",
@@ -74,7 +76,7 @@ export function createPlayerGrid(player, playerId) {
   });
 
   gridContainer.append(playerHeading, gridCellsContainer);
-  mainContainer.append(gridContainer);
+  contentBot.append(gridContainer);
 }
 
 // Function to rendershots, misses and hits
