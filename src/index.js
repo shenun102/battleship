@@ -54,27 +54,30 @@ createPlayerGrid(playerTwo, 2);
 
 // For attacks, let the user click on a coordinate in the enemy Gameboard. Send the user input to methods on your objects, and re-render the boards to display the new information.
 
-const gridContainer = document.querySelectorAll(".grid-cells-container-js");
-gridContainer.forEach((container) => {
-  container.addEventListener("click", function (e) {
-    if (!e.target.classList.contains("grid-cell")) return;
-    const targetCoord = e.target.dataset.coordinates
-      .split("")
-      .map((item) => parseInt(item, 10));
-    console.log(targetCoord);
-    playerOne.attack(playerTwo.gameboard, targetCoord);
+const gridContainer = document.querySelector(".grid-cells-container-1-js");
+const gridContainer2 = document.querySelector(".grid-cells-container-2-js");
 
-    renderShot(2, e.target, playerTwo);
+gridContainer2.addEventListener("click", handleClick);
 
-    // Logs for debugging
-    console.log(
-      `Array of missed shots coordinates`,
-      playerTwo.gameboard.missedShots
-    );
-    console.log(`object of ships,`, playerTwo.gameboard.ships);
-    console.log(`Is ship sunk?`, playerTwo.gameboard.ships[0].ship.isSunk());
-  });
-});
+function handleClick(e) {
+  if (!e.target.classList.contains("grid-cell")) return;
+  const targetCoord = e.target.dataset.coordinates
+    .split("")
+    .map((item) => parseInt(item, 10));
+  console.log(targetCoord);
+  playerOne.attack(playerTwo.gameboard, targetCoord);
+
+  renderShot(2, e.target, playerTwo);
+
+  // Logs for debugging
+  console.log(
+    `Array of missed shots coordinates`,
+    playerTwo.gameboard.missedShots
+  );
+  console.log(`object of ships,`, playerTwo.gameboard.ships);
+  console.log(`Is ship sunk?`, playerTwo.gameboard.ships[0].ship.isSunk());
+  console.log(`Are all ships sunk?`, playerTwo.gameboard.areAllShipsSunk())
+}
 
 // Players should take turns playing the game by attacking the enemy Gameboard. If you feel the need to keep track of the current player’s turn, it’s appropriate to manage that in this module, instead of another mentioned object.
 // The game is played against the computer, so make the ‘computer’ players capable of making random plays. The computer does not have to be smart, but it should know whether or not a given move is legal (i.e. it shouldn’t shoot the same coordinate twice).

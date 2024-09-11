@@ -20,8 +20,23 @@ export class Gameboard {
     let hit = false;
 
     // Check if the coordinate has already been hit before
-    if (this.hitShots.some(hitCoord => hitCoord[0] === coordinate[0] && hitCoord[1] === coordinate[1])) {
+    if (
+      this.hitShots.some(
+        (hitCoord) =>
+          hitCoord[0] === coordinate[0] && hitCoord[1] === coordinate[1]
+      )
+    ) {
       return; // If already hit, don't increment the hit counter or log this coordinate again
+    }
+
+    // Check if the coordinate has already been missed before
+    if (
+      this.missedShots.some(
+        (missedCoord) =>
+          missedCoord[0] === coordinate[0] && missedCoord[1] === coordinate[1]
+      )
+    ) {
+      return; // If already missed, don't push to missedshots array again
     }
 
     this.ships.forEach(({ ship, coordinates }) => {

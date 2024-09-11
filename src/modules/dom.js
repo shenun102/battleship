@@ -18,7 +18,7 @@ export function createPlayerGrid(player, playerId) {
   // Create grid cells for 10x10 grid
   const gridCellsContainer = createElement("div", [
     "grid-cells-container",
-    "grid-cells-container-js",
+    `grid-cells-container-${playerId}-js`,
   ]);
 
   // Create grid labels row and column
